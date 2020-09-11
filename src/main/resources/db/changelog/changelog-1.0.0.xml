@@ -1,0 +1,55 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="APalashinovich" id="1.0.0-1">
+        <comment>Creating users table</comment>
+        <createTable tableName="users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="login" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(64)"/>
+            <column name="name" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(64)"/>
+            <column name="sex" type="boolean" defaultValue="true"/>
+            <column name="birth_date" type="datetime"/>
+            <column name="phone" type="varchar(32)"/>
+            <column name="married" type="boolean" defaultValue="false"/>
+            <column name="work_company" type = "varchar(256)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1.0.0-2" author="APalashinovich">
+        <sql>
+            INSERT INTO users (login, password, name, last_name) VALUES ('admin', '351', 'admin', 'admin');
+        </sql>
+    </changeSet>
+    <changeSet id="1.0.0-3" author="APalashinovich">
+        <comment>Creating note table</comment>
+        <createTable tableName="note">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar(2048)"/>
+            <column name="author_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="note_users_fk" references="users(id)"/>
+            </column>
+            <column name="patient_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="note_users_patient_fk" references="users(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
