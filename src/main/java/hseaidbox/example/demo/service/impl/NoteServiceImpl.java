@@ -5,10 +5,12 @@ import hseaidbox.example.demo.repositories.NoteRepository;
 import hseaidbox.example.demo.repositories.UserRepository;
 import hseaidbox.example.demo.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class NoteServiceImpl implements NoteService {
 
     @Autowired
@@ -43,5 +45,11 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Note getById(Long id) {
         return noteRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void saveNote(String description) {
+        Note result = new Note(description, userRepository.findById(1L).orElse(null));
+        noteRepository.save(result);
     }
 }

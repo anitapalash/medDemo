@@ -3,10 +3,12 @@ package hseaidbox.example.demo.repositories;
 import hseaidbox.example.demo.model.Note;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface NoteRepository extends CrudRepository<Note, Long> {
     Optional<Note> findById(Long id);
 
